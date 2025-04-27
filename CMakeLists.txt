@@ -83,6 +83,7 @@ option(JSONCPP_STATIC_WINDOWS_RUNTIME "Use static (MT/MTd) Windows runtime" OFF)
 option(BUILD_SHARED_LIBS "Build jsoncpp_lib as a shared library." ON)
 option(BUILD_STATIC_LIBS "Build jsoncpp_lib as a static library." ON)
 option(BUILD_OBJECT_LIBS "Build jsoncpp_lib as a object library." ON)
+option(USE_PRE_CXX11_ABI "Use the -D_GLIBCXX_USE_CXX11_ABI=0 flag when compiling with GCC." OFF)
 
 # Adhere to GNU filesystem layout conventions
 include(GNUInstallDirs)
@@ -160,6 +161,11 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
     elseif(JSONCPP_WITH_STRICT_ISO)
         add_compile_options(-Wpedantic)
     endif()
+endif()
+
+if((MSYS OR MINGW OR (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")) AND ${USE_PRE_CXX11_ABI})
+    add_definitions("-DUSE_PRE_CXX11_ABI")
+    add_definitions("-D_GLIBCXX_USE_CXX11_ABI=0")
 endif()
 
 if(JSONCPP_WITH_WARNING_AS_ERROR)

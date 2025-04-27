@@ -39,7 +39,7 @@
 #endif
 #endif
 
-#if __cplusplus >= 201703L
+#if __cplusplus >= 201703L && (!defined(_GLIBCXX_USE_CXX11_ABI) || _GLIBCXX_USE_CXX11_ABI != 0)
 #define JSONCPP_HAS_STRING_VIEW 1
 #endif
 
